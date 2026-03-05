@@ -1,6 +1,6 @@
 # Code for the paper "A Step Towards Inherently Interpretable Causal Machine Learning Models for Decision-Making"
 
-This repository contains code, visuals, and experiments related to the manuscript.
+This repository contains code, visuals, and experiments related to the manuscript..
 
 ## Environment Setup
 
