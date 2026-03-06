@@ -31,8 +31,22 @@ model_configs = {
         }},
     "GAM": {
         "model_class": mw.GAMRegressorWrapper,
-        "params": {},
+        "params": {"max_iter": 5000},
     },
-    "SymbolicRegression": {"model_class": mw.SymbolicRegressor},
+    "SymbolicRegression": {
+        "model_class": mw.SymbolicRegressor,
+        "params": {
+            "maxsize": 20,
+            "niterations": 100,
+            "binary_operators": ["+", "*", "-", "/"],
+            "unary_operators": ["sin", "log", "exp", "log1p"],
+            "elementwise_loss": "loss(prediction, target) = (prediction - target)^2",
+            "random_state": 42,
+            "verbosity": 0,
+            "progress": False,
+            "deterministic": True,
+            "parallelism": "serial",
+        },
+    },
 
     }

@@ -16,19 +16,40 @@ from sklearn.model_selection import train_test_split
 # --- Symbolic Regression Wrapper ---
 # ---------------------------------------------------------------------
 class SymbolicRegressor:
-    def __init__(self, random_state=None):
+    def __init__(
+        self,
+        random_state=None,
+        maxsize=20,
+        niterations=100,
+        binary_operators=None,
+        unary_operators=None,
+        elementwise_loss="loss(prediction, target) = (prediction - target)^2",
+        verbosity=0,
+        progress=False,
+        deterministic=True,
+        parallelism='serial',
+    ):
         self.random_state = random_state
+        self.maxsize = maxsize
+        self.niterations = niterations
+        self.binary_operators = binary_operators if binary_operators is not None else ["+", "*", "-", "/"]
+        self.unary_operators = unary_operators if unary_operators is not None else ["sin", "log", "exp", "log1p"]
+        self.elementwise_loss = elementwise_loss
+        self.verbosity = verbosity
+        self.progress = progress
+        self.deterministic = deterministic
+        self.parallelism = parallelism
         self.model = PySRRegressor(
-            maxsize=20,
-            niterations=100,
-            binary_operators=["+", "*", "-", "/"],
-            unary_operators=["sin", "log", "exp", "log1p"],
-            elementwise_loss="loss(prediction, target) = (prediction - target)^2",
-            random_state=random_state if random_state else 42,
-            verbosity=0,
-            progress=False,
-            deterministic=True, 
-            parallelism='serial'
+            maxsize=self.maxsize,
+            niterations=self.niterations,
+            binary_operators=self.binary_operators,
+            unary_operators=self.unary_operators,
+            elementwise_loss=self.elementwise_loss,
+            random_state=self.random_state if self.random_state else 42,
+            verbosity=self.verbosity,
+            progress=self.progress,
+            deterministic=self.deterministic,
+            parallelism=self.parallelism,
         )
     
     def fit(self, X, y):
@@ -53,8 +74,9 @@ class SymbolicRegressor:
 # --- GAM Wrapper ---
 # ---------------------------------------------------------------------
 class GAMRegressorWrapper:
-    def __init__(self, random_state=None):
+    def __init__(self, random_state=None, max_iter=5000):
         self.random_state = random_state
+        self.max_iter = max_iter
         self.model = None
         self.n_features = None
     
@@ -70,7 +92,7 @@ class GAMRegressorWrapper:
         for i in range(1, self.n_features):
             formula_terms = formula_terms + s(i)
         
-        self.model = LinearGAM(formula_terms, max_iter=5000)
+        self.model = LinearGAM(formula_terms, max_iter=self.max_iter)
         self.model.fit(X, y)
         return self
     
