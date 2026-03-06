@@ -4,16 +4,16 @@ from sklearn.linear_model import LinearRegression
 
 model_configs = {
 
-    # "RandomForest": {
-    #     "model_class": mw.RandomForestRegressor,
-    #     "params": {"random_state": 42},
-    #     "param_grid": {
-    #         "n_estimators": [50, 100, 200, 500, 1000],
-    #         "max_depth": [None, 5, 10, 20, 30, 50],
-    #         "min_samples_split": [2, 5, 10, 15, 20],
-    #         "min_samples_leaf": [1, 2, 4],
-    #     },
-    # },
+    "RandomForest": {
+        "model_class": mw.RandomForestRegressor,
+        "params": {"random_state": 42},
+        "param_grid": {
+            "n_estimators": [50, 100, 200, 500, 1000],
+            "max_depth": [None, 5, 10, 20, 30, 50],
+            "min_samples_split": [2, 5, 10, 15, 20],
+            "min_samples_leaf": [1, 2, 4],
+        },
+    },
     "LinearRegression": {
         "model_class": LinearRegression,
         "param_grid": {
@@ -21,23 +21,23 @@ model_configs = {
             "positive": [True, False],
         },
     },
-    # "MLP": {
-    #     "model_class": mw.MLPRegressorWrapper,
-    #     "param_grid": {
-    #     "hidden_layer_sizes": [(50,), (100,), (50, 50), (100, 50), (100, 100)],
-    #     "alpha": [0.001, 0.01, 0.1],
-    #     "learning_rate": ['constant', 'adaptive'],
-    # }},
-    # "XGBoost": {
-    #     "model_class": mw.XGBRegressorWrapper,
-    #     "params": {"random_state": 42},
-    #     "param_grid": {
-    #         "max_depth": [3, 5, 7, 10, 15],
-    #         "learning_rate": [0.01, 0.05, 0.1, 0.3, 0.5],
-    #         "n_estimators": [100, 200, 500, 1000],
-    #         "subsample": [0.7, 0.85, 1.0],
-    #     },
-    # },
+    "MLP": {
+        "model_class": mw.MLPRegressorWrapper,
+        "param_grid": {
+        "hidden_layer_sizes": [(50,), (100,), (50, 50), (100, 50), (100, 100)],
+        "alpha": [0.001, 0.01, 0.1],
+        "learning_rate": ['constant', 'adaptive'],
+    }},
+    "XGBoost": {
+        "model_class": mw.XGBRegressorWrapper,
+        "params": {"random_state": 42},
+        "param_grid": {
+            "max_depth": [3, 5, 7, 10, 15],
+            "learning_rate": [0.01, 0.05, 0.1, 0.3, 0.5],
+            "n_estimators": [100, 200, 500, 1000],
+            "subsample": [0.7, 0.85, 1.0],
+        },
+    },
     "GAM": {
         "model_class": mw.GAMRegressorWrapper,
         "params": {"max_iter": 5000},
@@ -47,20 +47,20 @@ model_configs = {
             "spline_order": [3, 4],
         },
     },
-    # "SymbolicRegression": {
-    #     "model_class": mw.SymbolicRegressor,
-    #     "params": {
-    #         "maxsize": 20,
-    #         "niterations": 100,
-    #         "binary_operators": ["+", "*", "-", "/"],
-    #         "unary_operators": ["sin", "log", "exp", "log1p"],
-    #         "elementwise_loss": "loss(prediction, target) = (prediction - target)^2",
-    #         "random_state": 42,
-    #         "verbosity": 0,
-    #         "progress": False,
-    #         "deterministic": True,
-    #         "parallelism": "serial",
-    #     },
-    # },
+    "SymbolicRegression": {
+        "model_class": mw.SymbolicRegressor,
+        "params": {
+            "maxsize": 20,
+            "niterations": 100,
+            "binary_operators": ["+", "*", "-", "/"],
+            "unary_operators": ["sin", "log", "exp", "log1p"],
+            "elementwise_loss": "loss(prediction, target) = (prediction - target)^2",
+            "random_state": 42,
+            "verbosity": 0,
+            "progress": False,
+            "deterministic": True,
+            "parallelism": "serial",
+        },
+    },
 
 }
