@@ -74,35 +74,49 @@ class SymbolicRegressor:
 # --- GAM Wrapper ---
 # ---------------------------------------------------------------------
 class GAMRegressorWrapper:
-    def __init__(self, random_state=None, max_iter=5000):
+    def __init__(self, random_state=None, max_iter=5000, lam=0.6, n_splines=20, spline_order=3):
         self.random_state = random_state
         self.max_iter = max_iter
+        self.lam = lam
+        self.n_splines = n_splines
+        self.spline_order = spline_order
         self.model = None
         self.n_features = None
-    
+
+    # Required by scikit-learn GridSearchCV / clone()
+    def get_params(self, deep=True):
+        return {
+            "random_state": self.random_state,
+            "max_iter": self.max_iter,
+            "lam": self.lam,
+            "n_splines": self.n_splines,
+            "spline_order": self.spline_order,
+        }
+
+    def set_params(self, **params):
+        for key, value in params.items():
+            setattr(self, key, value)
+        return self
+
     def fit(self, X, y):
-        # Convert to numpy array if DataFrame
         if isinstance(X, pd.DataFrame):
             X = X.values
         self.n_features = X.shape[1]
-        
-        # Build GAM formula: s(0) + s(1) + ... for all features
-        # Use smooth splines for all features
-        formula_terms = s(0)
+
+        formula_terms = s(0, lam=self.lam, n_splines=self.n_splines, spline_order=self.spline_order)
         for i in range(1, self.n_features):
-            formula_terms = formula_terms + s(i)
-        
+            formula_terms = formula_terms + s(i, lam=self.lam, n_splines=self.n_splines, spline_order=self.spline_order)
+
         self.model = LinearGAM(formula_terms, max_iter=self.max_iter)
         self.model.fit(X, y)
         return self
-    
+
     def predict(self, X):
         if isinstance(X, pd.DataFrame):
             X = X.values
         return self.model.predict(X)
-    
+
     def get_summary(self):
-        """Return GAM summary statistics."""
         if self.model is None:
             return "Model not fitted"
         return str(self.model.statistics_)
