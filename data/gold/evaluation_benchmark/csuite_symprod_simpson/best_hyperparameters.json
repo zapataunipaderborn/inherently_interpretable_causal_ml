@@ -1,0 +1,11 @@
+{
+  "LinearRegression": {
+    "fit_intercept": true,
+    "positive": false
+  },
+  "GAM": {
+    "lam": 1,
+    "n_splines": 20,
+    "spline_order": 3
+  }
+}
