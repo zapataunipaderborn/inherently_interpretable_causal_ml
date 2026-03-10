@@ -1,2 +1,3 @@
 __pycache__
-outputsdata/gold/**/models/
+outputs
+data/gold/**/models/
